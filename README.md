@@ -1,6 +1,8 @@
 # TODO:
-- [ ] Draw an arch or series of short lines or points
-- [ ] Store power and angle variables and use them to draw  
+- [x] Draw an arch or series of short lines or points
+- [ ] Make the line bigger (brush?)
+- [ ] Fix lower timestep causing higher arc (I think timestep approaching 0 also approaches the mathematical correct arc)
+- [ ] Store power and angle variables and use them to get starting x and y velocity
 - [ ] Make it redraw (and update vars) on key press  
     - [ ] May have to deal with window focus issues  
 - [ ] Make the arch start at a chosen position (the tank)  
