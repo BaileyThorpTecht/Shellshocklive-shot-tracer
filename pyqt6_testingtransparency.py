@@ -20,14 +20,13 @@ class Box(QWidget):
     def paintEvent(self, event):
         #setup
         r = event.rect()
-        r = r.toRectF()
         p = QPainter(self)
         print(r)
 
-
-        #change pen color
+        #change pen
         newPen = p.pen()
         newPen.setColor(QColor(0,0,255,255))
+        newPen.setWidthF(3)
         p.setPen(newPen)
 
         #color background of box
