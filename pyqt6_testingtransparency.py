@@ -30,14 +30,14 @@ class Box(QWidget):
         p.setPen(newPen)
 
         #color background of box
-        p.fillRect(r,QColor(255,127,127,255))
+        p.fillRect(r,QColor(255,127,127,20))
 
         #drawing arc
         #starting vars. Eventually, position will be from the tank and velocity from power/angle
         timestep = 0.1
         x = 0
         y = 0
-        yVel = 105
+        yVel = 50
         xVel = 40
         yAcc = -10 #gravity
         xAcc = 0 #wind       
@@ -53,6 +53,15 @@ class Box(QWidget):
 
             line = QLineF(xOld, rectHeight - yOld, x, rectHeight - y)
             p.drawLine(line)
+
+    def mousePressEvent(self, event):
+        f = open("x_coords.txt", "a")
+        x = event.pos().x()
+        y = event.pos().y()
+        print(f"Position: {x}, {y}")
+        f.write(f"{x}\n")
+        f.close()
+
         
 
 
@@ -70,12 +79,13 @@ class App(QWidget):
 
 
 def SetWindowAttributes(win):
-    if False: #transparent background fullscreen
+    if True: #transparent background fullscreen
         win.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
         win.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground, True)
         win.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.FramelessWindowHint)
-    win.setGeometry(800,100, 800,600)
-    #win.setGeometry(-11,-11,1942,1102)
+        win.setGeometry(-11,-11,1942,1102)
+    else:
+        win.setGeometry(800,100, 800,600)
 
 if __name__ == '__main__':
     import sys
