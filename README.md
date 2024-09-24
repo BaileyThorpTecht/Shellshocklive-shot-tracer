@@ -1,7 +1,7 @@
 # TODO:
 - [x] Draw an arch or series of short lines or points 
 - [x] Make the line bigger (brush?)
-- [ ] Fix lower timestep causing higher arc (or just ignore it and use a really low timestep if performance is not an issue) (I think timestep approaching 0 also approaches the mathematical correct arc)
+- [x] Fix lower timestep causing higher arc (or just ignore it and use a really low timestep if performance is not an issue) (I think timestep approaching 0 also approaches the mathematical correct arc)
 - [ ] Store power and angle variables and use them to get starting x and y velocity
 - [ ] Make it redraw (and update vars) on key press  
     - [ ] May have to deal with window focus issues  

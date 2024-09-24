@@ -2,6 +2,7 @@ import sys
 
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
+from PyQt6.QtGui import QKeyEvent
 from PyQt6.QtWidgets import *
 
 def DoTimeStep(timestep, x, y, xVel, yVel, xAcc, yAcc):
@@ -10,9 +11,12 @@ def DoTimeStep(timestep, x, y, xVel, yVel, xAcc, yAcc):
 
     xVel = xVel + xAcc * timestep
     x = x + xVel * timestep
+    x = x + xAcc * timestep / 2 #account for inaccurate timestepping (only works with constant acc, which is fine)
 
     yVel = yVel + yAcc * timestep
     y = y + yVel * timestep
+    y = y + yAcc * timestep / 2 #account for inaccurate timestepping (only works with constant acc, which is fine)
+
 
     return x, y, xVel, yVel
 
@@ -34,9 +38,9 @@ class Box(QWidget):
 
         #drawing arc
         #starting vars. Eventually, position will be from the tank and velocity from power/angle
-        timestep = 0.1
-        x = 0
-        y = 0
+        timestep = 1
+        x = 800
+        y = 400
         yVel = 50
         xVel = 40
         yAcc = -10 #gravity
@@ -55,11 +59,11 @@ class Box(QWidget):
             p.drawLine(line)
 
     def mousePressEvent(self, event):
-        f = open("x_coords.txt", "a")
+        f = open("y_coords_90deg.txt", "a")
         x = event.pos().x()
         y = event.pos().y()
         print(f"Position: {x}, {y}")
-        f.write(f"{x}\n")
+        f.write(f"{y}\n")
         f.close()
 
         
@@ -76,13 +80,22 @@ class App(QWidget):
         paintBox = Box()
         main_layout.addWidget(paintBox)
 
+    def keyPressEvent(self, a0: QKeyEvent | None) -> None:
+        print(a0.key())
+        if a0.key() == Qt.Key.Key_P:
+            sys.exit()
+            
+        return super().keyPressEvent(a0)
+    
+
 
 
 def SetWindowAttributes(win):
     if True: #transparent background fullscreen
         win.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
         win.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground, True)
-        win.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.FramelessWindowHint)
+        #win.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.FramelessWindowHint)
+        win.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         win.setGeometry(-11,-11,1942,1102)
     else:
         win.setGeometry(800,100, 800,600)
